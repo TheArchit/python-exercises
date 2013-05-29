@@ -2,7 +2,7 @@ Solutions to challenges kindly laid down by 'gagomes'
 (https://github.com/gagomes) for me to resolve in Python and learn the
 language.
 
-insbd.py:
+insdb.py:
 --------
 Connects to a MySQL database, creates a table if there isn't one, checks if
 a row for the effective UNIX user exists, adds one if not and finally updates a
