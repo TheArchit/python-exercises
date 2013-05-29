@@ -1,0 +1,49 @@
+#!/bin/ksh
+
+# dummy_fdisk -- for testing my mkmnt.py Python script
+
+fdisk()
+{
+    cat <<- EOF
+Disk /dev/${DEVICE}: 85.9 GB, 85899345920 bytes
+255 heads, 63 sectors/track, 10443 cylinders, total 167772160 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x00077504
+
+   Device Boot      Start         End      Blocks   Id  System
+/dev/${DEVICE}1            2048     4196352     2097152+  83  Linux
+/dev/${DEVICE}2         4198400     5246976      524288+  83  Linux
+/dev/${DEVICE}3         5249024   167772159    81261568   83  Linux
+EOF
+}
+
+usage()
+{
+    echo ${0}: ${0} -l [device]
+    return 1
+}
+
+main()
+{
+    [ ${1} == "-l" ] || usage
+
+    while [ ${#} -gt 1 ] ; do
+        case ${2} in
+            sda|sdb|sdc)
+                DEVICE=${2}
+                fdisk
+                shift
+            ;;
+            *)
+                echo "${2}: No such device"
+                return 1
+            ;;
+        esac
+    done
+
+    return
+}
+
+main ${*}
